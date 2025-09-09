@@ -1,19 +1,19 @@
-import { createBot } from "mineflayer-bedrock";
+import { createClient } from "bedrock-protocol";
 
-const bot = createBot({
-  host: "103.161.119.28", // IP server của bạn
-  port: 30064,            // Port bạn vừa cung cấp
-  username: "MyBotAFK"    // Tên bot hiển thị trong server
+const client = createClient({
+  host: "103.161.119.28", // IP server
+  port: 30064,            // Cổng Bedrock
+  username: "MyBotAFK",   // Tên bot
+  version: "1.21.93"      // Phiên bản Bedrock
 });
 
-bot.on("spawn", () => {
-  console.log("✅ Bot đã join vào server!");
+client.on("join", () => {
+  console.log("✅ Bot đã join vào server Bedrock!");
 });
 
-// Nếu bot bị kick thì reconnect
-bot.on("end", () => {
-  console.log("❌ Bot bị ngắt kết nối, đang thử join lại...");
+client.on("disconnect", () => {
+  console.log("❌ Bot bị ngắt, thử reconnect...");
   setTimeout(() => {
-    bot.connect();
+    client.connect();
   }, 5000);
 });
